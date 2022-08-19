@@ -34,7 +34,7 @@ stage('Deploy to TEST') {
 when { not { branch "main" } }
 steps {
 sh """
-oc set image deployment home-automation home-automation=quay.io/${tharinidevi}/do400-deploying-lab:build-${BUILD_NUMBER} -n zemwng-deploying-lab-test --record
+oc set image deployment home-automation home-automation=quay.io/tharinidevi/do400-deploying-lab:build-${BUILD_NUMBER} -n zemwng-deploying-lab-test --record
 """
 }
 }
