@@ -38,6 +38,13 @@ oc set image deployment home-automation home-automation=quay.io/tharinidevi/do40
 """
 }
 }
-
+stage('Deploy to PROD') {
+when { branch "main" }
+steps {
+sh """
+oc set image deployment home-automation home-automation=quay.io/tharinidevi/do400-deploying-lab:build-${BUILD_NUMBER} -n zemwng-deploying-lab-prod --record
+"""
+}
+}
 }
 }
