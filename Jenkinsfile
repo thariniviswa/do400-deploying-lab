@@ -5,6 +5,11 @@ node { label "maven" }
   environment { QUAY = credentials('QUAY_USER') }
 stages {
 stage("Build & Push Image") {
+  stage("Test") {
+steps {
+sh "./mvnw verify"
+}
+}
 steps {
 sh '''
 ./mvnw quarkus:add-extension \
