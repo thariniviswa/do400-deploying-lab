@@ -2,9 +2,13 @@ pipeline {
 agent {
 node { label "maven" }
 }
-environment { QUAY = credentials('QUAY_USER') }
+  environment { QUAY = credentials('QUAY_USER') }
 stages {
-
+stage("Test") {
+steps {
+sh "./mvnw verify"
+}
+}
 stage("Build & Push Image") {
 steps {
 sh '''
@@ -13,8 +17,7 @@ sh '''
 '''
 sh '''
 ./mvnw package -DskipTests \
--Dquarkus.jib.base-jvm-image=quay.io/redhattraining/do400-
-java-alpine-openjdk11-jre:latest \
+-Dquarkus.jib.base-jvm-image=quay.io/redhattraining/do400-java-alpine-openjdk11-jre:latest \
 -Dquarkus.container-image.build=true \
 -Dquarkus.container-image.registry=quay.io \
 -Dquarkus.container-image.group=$QUAY_USR \
@@ -27,6 +30,5 @@ java-alpine-openjdk11-jre:latest \
 '''
 }
 }
-
 }
 }
